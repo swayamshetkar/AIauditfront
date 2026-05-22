@@ -13,7 +13,7 @@ import {
   AuditAndSendResponse,
 } from "@/types/api";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://swayamshetkar-ai-audit.hf.space";
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "";
 
 class ApiError extends Error {
   constructor(public status: number, message: string) {
