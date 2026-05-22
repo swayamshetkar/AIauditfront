@@ -1,0 +1,173 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { PublicAuditResponse, GenerateSummaryResponse } from "@/types/api";
+import { generateSummary } from "@/lib/api";
+import LeadCapture from "./LeadCapture";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Sparkles, ArrowDownToLine, Zap, CheckCircle2, AlertTriangle, XCircle } from "lucide-react";
+
+export default function AuditClient({ 
+  publicId, 
+  initialData 
+}: { 
+  publicId: string; 
+  initialData: PublicAuditResponse 
+}) {
+  const [isOwner, setIsOwner] = useState(false);
+  const [summaryData, setSummaryData] = useState<GenerateSummaryResponse | null>(null);
+  const [summaryLoading, setSummaryLoading] = useState(true);
+
+  const audit = initialData.audit;
+  const isHighSavings = audit.total_estimated_monthly_savings >= 500;
+  const isLowSavings = audit.total_estimated_monthly_savings < 100;
+
+  // Calculate Efficiency Score (100 - overspend)
+  // An overspend of 0 means 100% efficient
+  const efficiencyScore = 100 - audit.overspend_score;
+
+  useEffect(() => {
+    // Check if the current user created this audit
+    const ownedIds = JSON.parse(localStorage.getItem("airev_owned_audits") || "[]");
+    const owner = ownedIds.includes(publicId);
+    setIsOwner(owner);
+
+    // If it's the owner (or just viewing it fresh), generate the AI summary
+    // The requirement says "independently trigger" - doing this regardless of owner for the premium feel
+    generateSummary({ audit_result: audit })
+      .then(res => {
+        setSummaryData(res);
+        setSummaryLoading(false);
+      })
+      .catch(err => {
+        console.error("Failed to fetch summary:", err);
+        setSummaryLoading(false);
+      });
+  }, [publicId, audit]);
+
+  // Map score to color and icon
+  const getScoreColor = (score: number) => {
+    if (score >= 80) return "text-emerald-500";
+    if (score >= 50) return "text-amber-500";
+    return "text-rose-500";
+  };
+
+  const ScoreIcon = efficiencyScore >= 80 ? CheckCircle2 : (efficiencyScore >= 50 ? AlertTriangle : XCircle);
+
+  return (
+    <div className="space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-700">
+      
+      {/* Hero Section */}
+      <section className="text-center space-y-4 pt-8">
+        <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight">
+          Your Stack Analysis
+        </h1>
+        <p className="text-xl text-muted-foreground">
+          We found <span className="font-bold text-primary">${audit.total_estimated_monthly_savings.toLocaleString()}</span> in potential monthly savings.
+        </p>
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-8">
+          <Card className="w-full sm:w-64 bg-primary text-primary-foreground border-primary">
+            <CardContent className="pt-6">
+              <div className="text-sm font-medium opacity-90">Annual Savings</div>
+              <div className="text-4xl font-bold mt-2">
+                ${audit.total_estimated_annual_savings.toLocaleString()}
+              </div>
+            </CardContent>
+          </Card>
+          
+          <Card className="w-full sm:w-64">
+            <CardContent className="pt-6">
+              <div className="text-sm font-medium text-muted-foreground">Efficiency Score</div>
+              <div className={`text-4xl font-bold mt-2 flex items-center justify-center gap-2 ${getScoreColor(efficiencyScore)}`}>
+                {efficiencyScore}/100
+              </div>
+              <div className="text-xs text-muted-foreground mt-1">{audit.score_label}</div>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
+
+      {/* AI Summary Block */}
+      <section>
+        <Card className="bg-card shadow-sm border-muted">
+          <CardHeader className="pb-3">
+            <CardTitle className="flex items-center text-lg">
+              <Sparkles className="w-5 h-5 mr-2 text-primary" />
+              AI Executive Summary
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            {summaryLoading ? (
+              <div className="space-y-2">
+                <Skeleton className="h-4 w-full" />
+                <Skeleton className="h-4 w-[90%]" />
+                <Skeleton className="h-4 w-[95%]" />
+                <Skeleton className="h-4 w-[80%]" />
+              </div>
+            ) : summaryData ? (
+              <p className="text-muted-foreground leading-relaxed">
+                {summaryData.summary}
+              </p>
+            ) : (
+              <p className="text-muted-foreground italic">Summary unavailable.</p>
+            )}
+          </CardContent>
+        </Card>
+      </section>
+
+      {/* Per-Tool Recommendations */}
+      <section className="space-y-4">
+        <h2 className="text-2xl font-bold">Optimization Opportunities</h2>
+        <div className="grid grid-cols-1 gap-4">
+          {audit.recommendations.map((rec, index) => (
+            <Card key={index} className="overflow-hidden transition-all hover:shadow-md">
+              <CardContent className="p-0">
+                <div className="flex flex-col md:flex-row">
+                  <div className="bg-muted/50 p-6 md:w-1/4 flex flex-col justify-center border-b md:border-b-0 md:border-r">
+                    <div className="font-bold text-lg capitalize">{rec.tool.replace('_', ' ')}</div>
+                    <div className="text-sm text-muted-foreground mt-1">
+                      Save <span className="font-semibold text-foreground">${rec.estimated_monthly_savings}/mo</span>
+                    </div>
+                  </div>
+                  <div className="p-6 md:w-3/4 space-y-3">
+                    <div>
+                      <span className="font-semibold text-rose-500 text-sm uppercase tracking-wider">Issue</span>
+                      <p className="text-sm mt-1">{rec.issue}</p>
+                    </div>
+                    <div className="pt-2 border-t border-dashed">
+                      <span className="font-semibold text-emerald-600 text-sm uppercase tracking-wider">Action</span>
+                      <p className="font-medium mt-1 flex items-start gap-2">
+                        <Zap className="w-4 h-4 mt-0.5 text-emerald-500 shrink-0" />
+                        {rec.recommendation}
+                      </p>
+                    </div>
+                    <div className="text-sm text-muted-foreground italic">
+                      &quot;{rec.reasoning}&quot;
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+
+          {audit.recommendations.length === 0 && (
+            <Card>
+              <CardContent className="pt-6 text-center text-muted-foreground">
+                No major optimization opportunities found. Your stack is lean!
+              </CardContent>
+            </Card>
+          )}
+        </div>
+      </section>
+
+      {/* Lead Capture Block */}
+      {isOwner && (
+        <section className="pb-12 pt-4">
+          <LeadCapture auditId={publicId} isHighSavings={isHighSavings} />
+        </section>
+      )}
+
+    </div>
+  );
+}
