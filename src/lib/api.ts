@@ -13,7 +13,12 @@ import {
   AuditAndSendResponse,
 } from "@/types/api";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "";
+// Isomorphic URL routing:
+// - Server components (email link) use the absolute backend URL.
+// - Client components use the local Next.js proxy (rewrites to backend).
+const API_URL = typeof window === "undefined" 
+  ? (process.env.BACKEND_API_URL || "https://swayamshetkar-ai-audit.hf.space") 
+  : "";
 
 class ApiError extends Error {
   constructor(public status: number, message: string) {

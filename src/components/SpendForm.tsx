@@ -30,26 +30,27 @@ import {
 
 
 const formSchema = z.object({
-  team_size: z.coerce.number().min(1, "Team size must be at least 1"),
-  primary_use_case: z.string().min(1, "Please select a primary use case"),
+  team_size: z.coerce.number().min(1, "Team size must be at least 1").max(1000000, "Invalid size"),
+  primary_use_case: z.string().trim().min(1, "Please select a primary use case").max(100),
   tools: z.array(
     z.object({
-      tool: z.string().min(1, "Please select a tool"),
-      plan: z.string().min(1, "Please select a plan"),
-      monthly_spend: z.coerce.number().min(0, "Spend cannot be negative"),
-      seats: z.coerce.number().min(1, "Required"),
+      tool: z.string().trim().min(1, "Please select a tool").max(100),
+      plan: z.string().trim().min(1, "Please select a plan").max(100),
+      monthly_spend: z.coerce.number().min(0, "Spend cannot be negative").max(100000000, "Spend too large"),
+      seats: z.coerce.number().min(1, "Required").max(1000000, "Invalid amount"),
     })
-  ).min(1, "Add at least one tool to audit"),
-});
+    .strict()
+  ).min(1, "Add at least one tool to audit").max(50, "Too many tools"),
+}).strict();
 
 type FormValues = z.infer<typeof formSchema>;
 
 const leadSchema = z.object({
-  email: z.string().email("Please enter a valid email address"),
-  company_name: z.string().min(1, "Company name is required"),
-  role: z.string().min(1, "Role is required"),
-  website: z.string().optional(), // Honeypot
-});
+  email: z.string().trim().email("Invalid email address").max(100, "Email too long"),
+  company_name: z.string().trim().min(2, "Company name is required").max(100, "Name too long"),
+  role: z.string().trim().min(2, "Role is required").max(100, "Role too long"),
+  website: z.string().trim().optional(), // Honeypot
+}).strict();
 
 type LeadValues = z.infer<typeof leadSchema>;
 
