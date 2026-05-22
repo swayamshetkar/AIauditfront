@@ -1,14 +1,9 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Manrope } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const manrope = Manrope({
+  variable: "--font-manrope",
   subsets: ["latin"],
 });
 
@@ -25,12 +20,12 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased dark`}
+      className={`${manrope.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-background text-foreground">
-        <header className="border-b">
+      <body className="min-h-full flex flex-col bg-background text-foreground font-sans">
+        <header className="border-b bg-white">
           <div className="container mx-auto px-4 h-16 flex items-center">
-            <div className="text-xl font-bold tracking-tight text-primary">AIRev</div>
+            <div className="text-2xl font-extrabold tracking-tight text-primary">AIRev</div>
           </div>
         </header>
         <main className="flex-1 flex flex-col">{children}</main>

@@ -7,6 +7,10 @@ import {
   SaveLeadResponse,
   PublicAuditResponse,
   ToolsResponse,
+  AuditPreviewRequest,
+  AuditPreviewResponse,
+  AuditAndSendRequest,
+  AuditAndSendResponse,
 } from "@/types/api";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://swayamshetkar-ai-audit.hf.space";
@@ -47,6 +51,20 @@ async function fetchApi<T>(endpoint: string, options?: RequestInit): Promise<T> 
 
 export async function generateAudit(data: AuditRequest): Promise<AuditResponse> {
   return fetchApi<AuditResponse>("/api/audit", {
+    method: "POST",
+    body: JSON.stringify(data),
+  });
+}
+
+export async function getAuditPreview(data: AuditPreviewRequest): Promise<AuditPreviewResponse> {
+  return fetchApi<AuditPreviewResponse>("/api/audit-preview", {
+    method: "POST",
+    body: JSON.stringify(data),
+  });
+}
+
+export async function submitAuditAndSend(data: AuditAndSendRequest): Promise<AuditAndSendResponse> {
+  return fetchApi<AuditAndSendResponse>("/api/audit-and-send", {
     method: "POST",
     body: JSON.stringify(data),
   });

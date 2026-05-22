@@ -11,6 +11,26 @@ export interface AuditRequest {
   tools: ToolInput[];
 }
 
+export type AuditPreviewRequest = AuditRequest;
+
+export interface AuditPreviewResponse {
+  overspend_score: number;
+  total_estimated_monthly_savings: number;
+  total_estimated_annual_savings: number;
+}
+
+export interface AuditAndSendRequest extends AuditRequest {
+  email: string;
+  company_name: string;
+  role: string;
+  website: string; // Honeypot
+}
+
+export interface AuditAndSendResponse {
+  success: boolean;
+  message: string;
+}
+
 export interface Recommendation {
   tool: string;
   issue: string;

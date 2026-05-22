@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import { PublicAuditResponse, GenerateSummaryResponse } from "@/types/api";
 import { generateSummary } from "@/lib/api";
-import LeadCapture from "./LeadCapture";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Sparkles, ArrowDownToLine, Zap, CheckCircle2, AlertTriangle, XCircle } from "lucide-react";
@@ -15,7 +14,6 @@ export default function AuditClient({
   publicId: string; 
   initialData: PublicAuditResponse 
 }) {
-  const [isOwner, setIsOwner] = useState(false);
   const [summaryData, setSummaryData] = useState<GenerateSummaryResponse | null>(null);
   const [summaryLoading, setSummaryLoading] = useState(true);
 
@@ -28,10 +26,6 @@ export default function AuditClient({
   const efficiencyScore = 100 - audit.overspend_score;
 
   useEffect(() => {
-    // Check if the current user created this audit
-    const ownedIds = JSON.parse(localStorage.getItem("airev_owned_audits") || "[]");
-    const owner = ownedIds.includes(publicId);
-    setIsOwner(owner);
 
     // If it's the owner (or just viewing it fresh), generate the AI summary
     // The requirement says "independently trigger" - doing this regardless of owner for the premium feel
@@ -160,13 +154,6 @@ export default function AuditClient({
           )}
         </div>
       </section>
-
-      {/* Lead Capture Block */}
-      {isOwner && (
-        <section className="pb-12 pt-4">
-          <LeadCapture auditId={publicId} isHighSavings={isHighSavings} />
-        </section>
-      )}
 
     </div>
   );
