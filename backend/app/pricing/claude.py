@@ -1,0 +1,95 @@
+"""Claude (Anthropic) pricing data — verified from https://www.anthropic.com/pricing."""
+
+PRICING: dict[str, dict] = {
+    "free": {
+        "monthly": 0.0,
+        "annual_monthly": 0.0,
+        "features": [
+            "Basic access to Claude",
+            "Limited daily usage",
+        ],
+        "verified_at": "2025-05-21",
+        "source": "https://www.anthropic.com/pricing",
+        "max_seats": None,
+        "min_seats": None,
+    },
+    "pro": {
+        "monthly": 20.0,
+        "annual_monthly": 16.0,
+        "features": [
+            "5x free usage",
+            "Access to all models",
+            "Priority access during peak",
+        ],
+        "verified_at": "2025-05-21",
+        "source": "https://www.anthropic.com/pricing",
+        "max_seats": None,
+        "min_seats": None,
+    },
+    "max_5x": {
+        "monthly": 100.0,
+        "annual_monthly": 80.0,
+        "features": [
+            "5x Pro usage limits",
+            "All models",
+            "Extended context",
+        ],
+        "verified_at": "2025-05-21",
+        "source": "https://www.anthropic.com/pricing",
+        "max_seats": None,
+        "min_seats": None,
+    },
+    "max_20x": {
+        "monthly": 200.0,
+        "annual_monthly": 160.0,
+        "features": [
+            "20x Pro usage limits",
+            "All models",
+            "Highest priority access",
+        ],
+        "verified_at": "2025-05-21",
+        "source": "https://www.anthropic.com/pricing",
+        "max_seats": None,
+        "min_seats": None,
+    },
+    "team_standard": {
+        "monthly": 25.0,
+        "annual_monthly": 20.0,
+        "features": [
+            "Admin controls",
+            "Centralized billing",
+            "Team workspace",
+        ],
+        "verified_at": "2025-05-21",
+        "source": "https://www.anthropic.com/pricing",
+        "max_seats": None,
+        "min_seats": 5,
+    },
+    "team_premium": {
+        "monthly": 125.0,
+        "annual_monthly": 100.0,
+        "features": [
+            "5x standard usage",
+            "Admin controls",
+            "Centralized billing",
+        ],
+        "verified_at": "2025-05-21",
+        "source": "https://www.anthropic.com/pricing",
+        "max_seats": None,
+        "min_seats": 5,
+    },
+    "enterprise": {
+        "monthly": None,
+        "annual_monthly": None,
+        "features": [
+            "HIPAA compliance",
+            "Custom data retention",
+            "SSO/SAML",
+            "Dedicated support",
+        ],
+        "verified_at": "2025-05-21",
+        "source": "https://www.anthropic.com/pricing",
+        "max_seats": None,
+        "min_seats": None,
+    },
+}
