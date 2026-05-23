@@ -21,7 +21,9 @@ export default function AuditClient({
   const isHighSavings = audit.total_estimated_monthly_savings >= 500;
   const isLowSavings = audit.total_estimated_monthly_savings < 100;
 
-  const efficiencyScore = audit.overspend_score;
+  // Calculate Efficiency Score (100 - overspend)
+  // An overspend of 0 means 100% efficient
+  const efficiencyScore = 100 - audit.overspend_score;
 
   useEffect(() => {
 
@@ -70,7 +72,7 @@ export default function AuditClient({
           
           <Card className="w-full sm:w-64 shadow-none">
             <CardContent className="pt-6">
-              <div className="text-sm font-medium text-muted-foreground">Efficiency Score</div>
+              <div className="text-sm font-medium text-muted-foreground">Credit Efficiency Score</div>
               <div className={`text-4xl font-bold mt-2 flex items-center justify-center gap-2 ${getScoreColor(efficiencyScore)}`}>
                 {efficiencyScore}/100
               </div>

@@ -229,7 +229,7 @@ export default function SpendForm() {
   }
 
   if (step === "preview" && previewResult) {
-    const efficiencyScore = previewResult.overspend_score;
+    const efficiencyScore = 100 - previewResult.overspend_score;
     const isEfficient = efficiencyScore >= 80;
     const scoreColor = isEfficient ? "text-primary" : (efficiencyScore >= 50 ? "text-foreground" : "text-destructive");
 
@@ -237,7 +237,7 @@ export default function SpendForm() {
       <div className="w-full max-w-2xl mx-auto space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-500">
         <Card className="text-center p-8 border border-border shadow-none bg-card">
           <CardContent className="pt-0 space-y-4">
-            <h2 className="text-2xl font-bold tracking-tight">Efficiency Score</h2>
+            <h2 className="text-2xl font-bold tracking-tight">Credit Efficiency Score</h2>
             <div className={`text-7xl font-extrabold ${scoreColor}`}>
               {efficiencyScore}/100
             </div>
