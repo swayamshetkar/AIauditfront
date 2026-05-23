@@ -21,7 +21,7 @@ export default function AuditClient({
   const isHighSavings = audit.total_estimated_monthly_savings >= 500;
   const isLowSavings = audit.total_estimated_monthly_savings < 100;
 
-  const overspendScore = audit.overspend_score;
+  const efficiencyScore = audit.overspend_score;
 
   useEffect(() => {
 
@@ -40,12 +40,12 @@ export default function AuditClient({
 
   // Map score to color and icon
   const getScoreColor = (score: number) => {
-    if (score < 30) return "text-primary";
-    if (score < 70) return "text-foreground";
+    if (score >= 80) return "text-primary";
+    if (score >= 50) return "text-foreground";
     return "text-destructive";
   };
 
-  const ScoreIcon = overspendScore < 30 ? CheckCircle2 : (overspendScore < 70 ? AlertTriangle : XCircle);
+  const ScoreIcon = efficiencyScore >= 80 ? CheckCircle2 : (efficiencyScore >= 50 ? AlertTriangle : XCircle);
 
   return (
     <div className="space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-700">
@@ -70,9 +70,9 @@ export default function AuditClient({
           
           <Card className="w-full sm:w-64 shadow-none">
             <CardContent className="pt-6">
-              <div className="text-sm font-medium text-muted-foreground">Overspend Score</div>
-              <div className={`text-4xl font-bold mt-2 flex items-center justify-center gap-2 ${getScoreColor(overspendScore)}`}>
-                {overspendScore}/100
+              <div className="text-sm font-medium text-muted-foreground">Efficiency Score</div>
+              <div className={`text-4xl font-bold mt-2 flex items-center justify-center gap-2 ${getScoreColor(efficiencyScore)}`}>
+                {efficiencyScore}/100
               </div>
               <div className="text-xs text-muted-foreground mt-1">{audit.score_label}</div>
             </CardContent>
