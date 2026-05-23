@@ -7,8 +7,8 @@ import "./globals.css";
 const font = Space_Grotesk({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Credex | Buy & Sell Unused AI and Cloud Credits",
-  description: "The marketplace layer for AI and cloud infrastructure spend. Unlock liquidity from unused credits.",
+  title: "Spend Node by Credex | Unused AI and Cloud Credits",
+  description: "Unlock liquidity from unused credits. Fast-growing teams get access to verified compute at lower cost.",
 };
 
 export default function RootLayout({

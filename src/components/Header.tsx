@@ -4,12 +4,22 @@ import { CredexLogo } from "./CredexLogo";
 export function Header() {
   return (
     <header className="mx-auto w-full px-4 pt-6 pb-2 z-50 relative max-w-7xl">
-      <div className="flex items-center justify-between rounded border bg-card px-6 py-4">
+      <div className="flex items-center justify-between rounded border bg-card px-6 py-4 relative">
         
         {/* Left: Logo */}
-        <Link href="/" className="transition-opacity hover:opacity-90">
+        <Link href="/" className="transition-opacity hover:opacity-90 shrink-0">
           <CredexLogo />
         </Link>
+
+        {/* Center: App Name & Tagline */}
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 hidden sm:flex flex-col items-center">
+          <div className="font-bold text-lg tracking-tight text-foreground leading-none">
+            Spend Node
+          </div>
+          <div className="text-[11px] font-medium text-muted-foreground uppercase tracking-wider mt-1.5">
+            Analyze your AI footprint
+          </div>
+        </div>
 
         {/* Right: GitHub Project Link */}
         <div className="flex items-center">

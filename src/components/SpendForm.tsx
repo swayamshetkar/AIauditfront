@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
+import { motion, AnimatePresence } from "framer-motion";
 import { Plus, Trash2, Loader2, ArrowRight, CheckCircle2, Check, ChevronsUpDown } from "lucide-react";
 
 import { cn } from "@/lib/utils";
@@ -121,6 +122,21 @@ export default function SpendForm() {
   const [previewResult, setPreviewResult] = useState<AuditPreviewResponse | null>(null);
 
   useEffect(() => {
+    // Set initial state without adding to history
+    window.history.replaceState({ step: "input" }, "", "");
+
+    const handlePopState = (event: PopStateEvent) => {
+      if (event.state && event.state.step) {
+        setStep(event.state.step);
+      } else {
+        setStep("input");
+      }
+    };
+    window.addEventListener("popstate", handlePopState);
+    return () => window.removeEventListener("popstate", handlePopState);
+  }, []);
+
+  useEffect(() => {
     getTools()
       .then(res => setToolsConfig(res.tools))
       .catch(err => console.error("Failed to load tools", err));
@@ -181,6 +197,7 @@ export default function SpendForm() {
       const response = await getAuditPreview(data);
       setAuditData(data);
       setPreviewResult(response);
+      window.history.pushState({ step: "preview" }, "", "");
       setStep("preview");
     } catch (error) {
       console.error("Failed to get preview", error);
@@ -201,6 +218,7 @@ export default function SpendForm() {
         role: leadData.role,
         website: leadData.website || "",
       });
+      window.history.pushState({ step: "success" }, "", "");
       setStep("success");
     } catch (error) {
       console.error("Failed to send audit", error);
@@ -214,27 +232,36 @@ export default function SpendForm() {
     return null;
   }
 
-  if (step === "success") {
-    return (
-      <div className="max-w-2xl mx-auto text-center space-y-6 py-12 animate-in fade-in zoom-in duration-500">
-        <div className="w-20 h-20 bg-primary/10 text-primary rounded flex items-center justify-center mx-auto shadow-none">
-          <CheckCircle2 className="w-10 h-10" />
-        </div>
-        <h2 className="text-3xl font-bold tracking-tight">Listing Initiated! Check your inbox.</h2>
-        <p className="text-xl text-muted-foreground">
-          We just emailed you a secure link to manage your marketplace liquidity and full AI credit analysis.
-        </p>
-      </div>
-    );
-  }
+  const toolOptions = toolsConfig 
+    ? Object.keys(toolsConfig).map(t => ({ value: t, label: formatName(t) })) 
+    : [];
 
-  if (step === "preview" && previewResult) {
+  const slideVariants = {
+    initial: { opacity: 0, y: 15 },
+    enter: { opacity: 1, y: 0, transition: { duration: 0.3 } },
+    exit: { opacity: 0, y: -15, transition: { duration: 0.2 } },
+  };
+
+  const renderSuccess = () => (
+    <motion.div key="success" variants={slideVariants} initial="initial" animate="enter" exit="exit" className="max-w-2xl mx-auto text-center space-y-6 py-12">
+      <div className="w-20 h-20 bg-primary/10 text-primary rounded flex items-center justify-center mx-auto shadow-none">
+        <CheckCircle2 className="w-10 h-10" />
+      </div>
+      <h2 className="text-3xl font-bold tracking-tight">Listing Initiated! Check your inbox.</h2>
+      <p className="text-xl text-muted-foreground">
+        We just emailed you a secure link to manage your marketplace liquidity and full AI credit analysis.
+      </p>
+    </motion.div>
+  );
+
+  const renderPreview = () => {
+    if (!previewResult) return null;
     const efficiencyScore = 100 - previewResult.overspend_score;
     const isEfficient = efficiencyScore >= 80;
     const scoreColor = isEfficient ? "text-primary" : (efficiencyScore >= 50 ? "text-foreground" : "text-destructive");
 
     return (
-      <div className="w-full max-w-2xl mx-auto space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-500">
+      <motion.div key="preview" variants={slideVariants} initial="initial" animate="enter" exit="exit" className="w-full max-w-2xl mx-auto space-y-10">
         <Card className="text-center p-8 border border-border shadow-none bg-card">
           <CardContent className="pt-0 space-y-4">
             <h2 className="text-2xl font-bold tracking-tight">Credit Efficiency Score</h2>
@@ -326,20 +353,15 @@ export default function SpendForm() {
             </Form>
           </CardContent>
         </Card>
-      </div>
+      </motion.div>
     );
-  }
+  };
 
-  // Generate tool options correctly formatted
-  const toolOptions = toolsConfig 
-    ? Object.keys(toolsConfig).map(t => ({ value: t, label: formatName(t) })) 
-    : [];
-
-  // STEP: "input"
-  return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onCalculate)} className="space-y-10 w-full max-w-3xl mx-auto">
-        <div className="space-y-6">
+  const renderInput = () => (
+    <motion.div key="input" variants={slideVariants} initial="initial" animate="enter" exit="exit" className="w-full">
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onCalculate)} className="space-y-10 w-full max-w-3xl mx-auto">
+          <div className="space-y-6">
           <FormField
             control={form.control}
             name="team_size"
@@ -507,5 +529,14 @@ export default function SpendForm() {
         </div>
       </form>
     </Form>
+    </motion.div>
+  );
+
+  return (
+    <AnimatePresence mode="wait">
+      {step === "success" && renderSuccess()}
+      {step === "preview" && renderPreview()}
+      {step === "input" && renderInput()}
+    </AnimatePresence>
   );
 }

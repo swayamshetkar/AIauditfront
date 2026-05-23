@@ -1,6 +1,7 @@
 import { getPublicAudit } from "@/lib/api";
 import { Metadata } from "next";
 import AuditClient from "@/components/AuditClient";
+import { BlueprintBackground } from "@/components/BlueprintBackground";
 import { notFound } from "next/navigation";
 
 interface AuditPageProps {
@@ -12,16 +13,16 @@ export async function generateMetadata({ params }: AuditPageProps): Promise<Meta
   try {
     const data = await getPublicAudit(public_id);
     return {
-      title: data.og?.title || "Credex Liquidity Analysis",
+      title: data.og?.title || "Spend Node Liquidity Analysis",
       description: data.og?.description || "Check out this AI & Cloud liquidity analysis.",
       openGraph: {
-        title: data.og?.title || "Credex Liquidity Analysis",
+        title: data.og?.title || "Spend Node Liquidity Analysis",
         description: data.og?.description || "Check out this AI & Cloud liquidity analysis.",
       }
     };
   } catch (e) {
     return {
-      title: "Credex Liquidity Analysis",
+      title: "Spend Node Liquidity Analysis",
     };
   }
 }
@@ -32,11 +33,13 @@ export default async function AuditPage({ params }: AuditPageProps) {
   try {
     const data = await getPublicAudit(public_id);
     return (
-      <div className="flex-1 bg-muted/30 py-8">
-        <div className="container mx-auto px-4 max-w-5xl">
-          <AuditClient publicId={public_id} initialData={data} />
+      <BlueprintBackground>
+        <div className="flex-1 py-8">
+          <div className="container mx-auto px-4 max-w-5xl">
+            <AuditClient publicId={public_id} initialData={data} />
+          </div>
         </div>
-      </div>
+      </BlueprintBackground>
     );
   } catch (error) {
     console.error("Failed to load audit:", error);
