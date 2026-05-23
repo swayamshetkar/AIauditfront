@@ -15,8 +15,28 @@ Check out the configuration reference at https://huggingface.co/docs/hub/spaces-
 
 AIRev analyzes your team's AI tool subscriptions — Cursor, Copilot, ChatGPT, Claude, and more — and identifies redundancy, enterprise overkill, workflow mismatches, and API overspend. Teams typically discover **$200–$2,000/month** in savings they didn't know they were leaving on the table.
 
-<!-- TODO: Add screenshot of audit results page -->
-![Audit Results Screenshot](#)
+### 🌐 Live Demo
+🔗 **Frontend (Next.js):** [https://a-iauditfront.vercel.app](https://a-iauditfront.vercel.app)
+
+---
+
+## Architecture & Logic Summary
+
+This project is a **Fullstack Monorepo**.
+- **Frontend (Root):** A sleek Next.js React application styled with TailwindCSS and Framer Motion. It captures user inputs and renders the gated audit flow.
+- **Backend (`/backend`):** A robust Python FastAPI backend powered by a deterministic, rule-based audit engine.
+
+### How the Logic Works:
+1. **The Audit Engine:** When the frontend submits an audit request, the backend runs the data through 5 strict rules:
+   - *Workflow Mismatch:* Checks if non-coders are paying for coding tools.
+   - *Enterprise Overkill:* Checks if small teams are paying for Enterprise plans.
+   - *Redundancy:* Checks if teams are paying for overlapping tools (e.g., both Cursor and Copilot).
+   - *API Overspend:* Checks if direct API usage would be cheaper than seat-based subscriptions.
+   - *Seat Efficiency:* Checks if the team is paying for unused seats.
+2. **The Scoring System:** The rules aggregate to generate an "Efficiency Score" (0-100) and calculate exact dollar amounts for potential monthly/annual savings.
+3. **The Secure Gate (Email Logic):** To prevent sensitive audit data from leaking in browser DevTools, the backend utilizes a 2-step process:
+   - **Step 1 (`/api/audit-preview`):** Runs the audit but only returns the high-level efficiency score to the frontend.
+   - **Step 2 (`/api/audit-and-send`):** Saves the full audit to **Supabase**, generates a secure `public_id`, and uses **Resend** to email the user a private link to their full report.
 
 ---
 
@@ -110,8 +130,7 @@ CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
 
 ### Deployed URL
 
-<!-- TODO: Add deployed URL -->
-🔗 `https://airev.example.com`
+🔗 **Live URL:** [https://a-iauditfront.vercel.app](https://a-iauditfront.vercel.app)
 
 ---
 
