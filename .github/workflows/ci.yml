@@ -20,10 +20,10 @@ jobs:
           python-version: '3.11'
 
       - name: Install dependencies
-        run: pip install -r requirements.txt
+        run: cd backend && pip install -r requirements.txt
 
       - name: Lint with Ruff
-        run: ruff check app/ tests/
+        run: cd backend && ruff check app/ tests/
 
       - name: Run tests
-        run: pytest tests/ -v
+        run: cd backend && pytest tests/ -v
