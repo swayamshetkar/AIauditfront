@@ -2,9 +2,10 @@
 
 from __future__ import annotations
 
+from dataclasses import dataclass
+
 from app.schemas import PricingType, ToolCategory, UseCase
 
-from dataclasses import dataclass
 
 @dataclass
 class ToolProfile:

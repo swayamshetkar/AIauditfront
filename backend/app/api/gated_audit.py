@@ -1,7 +1,6 @@
 """POST /api/audit-preview and /api/audit-and-send for gated flow."""
 
 import logging
-from datetime import datetime, timezone
 
 from fastapi import APIRouter, Request
 from nanoid import generate as nanoid
@@ -9,8 +8,8 @@ from nanoid import generate as nanoid
 from app.engine import run_audit
 from app.middleware.rate_limiter import AUDIT_RATE_LIMIT, limiter
 from app.schemas import AuditInput, AuditPreviewResponse, GatedAuditInput, LeadInput, LeadResponse
-from app.services.supabase import store_audit, store_lead
 from app.services.email_service import send_audit_confirmation
+from app.services.supabase import store_audit, store_lead
 
 logger = logging.getLogger(__name__)
 
@@ -29,7 +28,7 @@ async def preview_audit(request: Request, payload: AuditInput) -> AuditPreviewRe
     does not expose the detailed breakdown to the client.
     """
     audit_result = run_audit(payload)
-    
+
     return AuditPreviewResponse(
         overspend_score=audit_result.overspend_score,
         score_label=audit_result.score_label,

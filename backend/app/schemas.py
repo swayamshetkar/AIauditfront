@@ -7,7 +7,6 @@ from typing import Literal
 
 from pydantic import BaseModel, Field, model_validator
 
-
 # ---------------------------------------------------------------------------
 # Enums
 # ---------------------------------------------------------------------------
@@ -81,7 +80,7 @@ class ToolUsage(BaseModel):
     def validate_plan_for_tool(self) -> ToolUsage:
         from app.pricing.registry import get_all_plans
         valid_plans = get_all_plans(self.tool)
-        # If tool isn't in registry at all, we could also flag it, 
+        # If tool isn't in registry at all, we could also flag it,
         # but let's just validate the plan if the tool is known.
         if valid_plans and self.plan.lower() not in [p.lower() for p in valid_plans]:
             raise ValueError(f"Invalid plan '{self.plan}' for tool '{self.tool}'. Valid plans are: {', '.join(valid_plans)}")

@@ -5,9 +5,9 @@ Weight: 35 / 100
 
 from __future__ import annotations
 
+from app.pricing.registry import PRICING_REGISTRY
 from app.schemas import Confidence, Recommendation, Severity, ToolUsage, UseCase
 from app.tool_profiles import TOOL_PROFILES
-from app.pricing.registry import PRICING_REGISTRY
 
 RULE_NAME: str = "api_overspend"
 RULE_WEIGHT: int = 35
@@ -100,10 +100,10 @@ def evaluate(
             f"for a {primary_use_case.value} team of {team_size}."
         ),
         recommendation=(
-            f"Review API usage patterns and implement cost controls. "
-            f"Consider setting budget alerts, optimizing prompt lengths, "
-            f"caching frequent queries, or switching to more cost-effective "
-            f"models for routine tasks."
+            "Review API usage patterns and implement cost controls. "
+            "Consider setting budget alerts, optimizing prompt lengths, "
+            "caching frequent queries, or switching to more cost-effective "
+            "models for routine tasks."
         ),
         reasoning=(
             f"Based on team size ({team_size}), workflow type "

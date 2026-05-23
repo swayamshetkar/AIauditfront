@@ -97,7 +97,7 @@ async def _try_openrouter(prompt: str) -> str | None:
         )
         text = (response.choices[0].message.content or "").strip()
         return text if text else None
-    except asyncio.TimeoutError:
+    except TimeoutError:
         logger.warning("OpenRouter request timed out after %ds", _AI_TIMEOUT)
         return None
     except Exception:

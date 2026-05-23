@@ -4,10 +4,9 @@ These tests exercise the full `run_audit` pipeline end-to-end, ensuring that
 rules compose correctly, scores are valid, and the output schema is complete.
 """
 
-import pytest
 
 from app.engine import run_audit
-from app.schemas import AuditInput, AuditResult, Severity, ToolUsage, UseCase
+from app.schemas import AuditInput, AuditResult, ToolUsage, UseCase
 
 
 class TestAuditEngine:

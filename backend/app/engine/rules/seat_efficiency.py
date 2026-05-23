@@ -7,7 +7,6 @@ from __future__ import annotations
 
 from app.schemas import Confidence, Recommendation, Severity, ToolUsage, UseCase
 from app.tool_profiles import TOOL_PROFILES
-from app.pricing.registry import get_plan_price
 
 RULE_NAME: str = "seat_efficiency"
 RULE_WEIGHT: int = 15
@@ -98,10 +97,10 @@ def evaluate(
                 f"${monthly_savings:.2f}/mo."
             ),
             reasoning=(
-                f"Each unused seat is a direct cost with zero productivity "
-                f"return. Seat counts should be reviewed quarterly and aligned "
-                f"to actual headcount. Consider enabling just-in-time "
-                f"provisioning if available."
+                "Each unused seat is a direct cost with zero productivity "
+                "return. Seat counts should be reviewed quarterly and aligned "
+                "to actual headcount. Consider enabling just-in-time "
+                "provisioning if available."
             ),
             estimated_monthly_savings=round(monthly_savings, 2),
             estimated_annual_savings=round(monthly_savings * 12, 2),
@@ -122,9 +121,9 @@ def evaluate(
                 f"have it. Under-licensing can reduce team productivity."
             ),
             reasoning=(
-                f"While fewer seats reduce cost, under-licensing can create "
-                f"bottlenecks where team members wait for access or resort to "
-                f"less effective alternatives."
+                "While fewer seats reduce cost, under-licensing can create "
+                "bottlenecks where team members wait for access or resort to "
+                "less effective alternatives."
             ),
             estimated_monthly_savings=0.0,
             estimated_annual_savings=0.0,

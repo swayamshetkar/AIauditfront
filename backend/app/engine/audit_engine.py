@@ -2,9 +2,9 @@
 
 from __future__ import annotations
 
-from app.schemas import AuditInput, AuditResult, Recommendation, Severity
 from app.engine.rules import ALL_RULES
 from app.engine.scoring import compute_score
+from app.schemas import AuditInput, AuditResult, Recommendation, Severity
 
 
 def run_audit(input_data: AuditInput) -> AuditResult:
@@ -25,7 +25,7 @@ def run_audit(input_data: AuditInput) -> AuditResult:
             result = rule.evaluate(tool, input_data.team_size, input_data.primary_use_case, input_data.tools)
             if result:
                 recommendations.append(result)
-                
+
                 # Track highest severity for scoring
                 severity_factor = severity_to_factor.get(result.severity, 0.0)
                 current_max = rule_scores.get(rule.RULE_NAME, 0.0)
@@ -40,7 +40,7 @@ def run_audit(input_data: AuditInput) -> AuditResult:
     total_monthly_savings = sum(r.estimated_monthly_savings for r in recommendations)
     total_annual_savings = sum(r.estimated_annual_savings for r in recommendations)
     total_spend = sum(t.monthly_spend for t in input_data.tools)
-    
+
     # Cap total savings at total spend
     total_monthly_savings = min(total_monthly_savings, total_spend)
     total_annual_savings = min(total_annual_savings, total_spend * 12)

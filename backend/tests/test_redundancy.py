@@ -4,9 +4,8 @@ The rule should flag teams running multiple tools that serve the same purpose
 (e.g., three coding IDEs or three chat-based assistants).
 """
 
-import pytest
 
-from app.engine.rules.redundancy import RULE_NAME, RULE_WEIGHT, evaluate
+from app.engine.rules.redundancy import evaluate
 from app.schemas import Recommendation, Severity, ToolUsage, UseCase
 
 

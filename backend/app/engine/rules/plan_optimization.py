@@ -7,9 +7,9 @@ a clear mistake).
 
 from __future__ import annotations
 
+from app.pricing.registry import get_all_plans, get_plan_price
 from app.schemas import Confidence, Recommendation, Severity, ToolUsage, UseCase
 from app.tool_profiles import TOOL_PROFILES
-from app.pricing.registry import get_all_plans, get_plan_price, PRICING_REGISTRY
 
 RULE_NAME: str = "plan_optimization"
 RULE_WEIGHT: int = 0
@@ -83,10 +83,10 @@ def evaluate(
                         f"${best_price:.0f}/seat/mo instead of a team plan."
                     ),
                     reasoning=(
-                        f"At your team size, individual licenses can be more "
-                        f"cost-effective while providing equivalent AI "
-                        f"capabilities. Team management features may not "
-                        f"justify the premium."
+                        "At your team size, individual licenses can be more "
+                        "cost-effective while providing equivalent AI "
+                        "capabilities. Team management features may not "
+                        "justify the premium."
                     ),
                     estimated_monthly_savings=round(monthly_savings, 2),
                     estimated_annual_savings=round(monthly_savings * 12, 2),

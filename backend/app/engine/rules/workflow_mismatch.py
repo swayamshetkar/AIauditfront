@@ -7,7 +7,6 @@ from __future__ import annotations
 
 from app.schemas import Confidence, Recommendation, Severity, ToolUsage, UseCase
 from app.tool_profiles import TOOL_PROFILES
-from app.pricing.registry import get_plan_price
 
 RULE_NAME: str = "workflow_mismatch"
 RULE_WEIGHT: int = 25
@@ -118,8 +117,8 @@ def evaluate(
                 f"coding assistant."
             ),
             recommendation=(
-                f"Consider Claude or a dedicated coding IDE like Cursor for "
-                f"superior code generation and debugging capabilities."
+                "Consider Claude or a dedicated coding IDE like Cursor for "
+                "superior code generation and debugging capabilities."
             ),
             reasoning=(
                 f"While {tool.tool.replace('_', ' ').title()} can handle coding "

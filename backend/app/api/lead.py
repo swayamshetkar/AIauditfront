@@ -2,7 +2,7 @@
 
 import logging
 
-from fastapi import APIRouter, HTTPException, Request
+from fastapi import APIRouter, Request
 
 from app.middleware.rate_limiter import LEAD_RATE_LIMIT, limiter
 from app.schemas import AuditResult, LeadInput, LeadResponse

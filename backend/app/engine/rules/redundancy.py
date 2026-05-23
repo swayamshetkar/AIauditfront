@@ -119,9 +119,9 @@ def evaluate(
                 f"tool your team prefers and standardize."
             ),
             reasoning=(
-                f"Running multiple coding AI assistants creates context-switching "
-                f"overhead and duplicates spend. Most teams find a single tool "
-                f"sufficient after an adjustment period."
+                "Running multiple coding AI assistants creates context-switching "
+                "overhead and duplicates spend. Most teams find a single tool "
+                "sufficient after an adjustment period."
             ),
             estimated_monthly_savings=round(monthly_savings, 2),
             estimated_annual_savings=round(monthly_savings * 12, 2),
@@ -155,9 +155,9 @@ def evaluate(
                 f"{primary_use_case.value} workflow."
             ),
             reasoning=(
-                f"General-purpose AI assistants have significant functional "
-                f"overlap for most workflows. Consolidation reduces per-seat "
-                f"costs and simplifies vendor management."
+                "General-purpose AI assistants have significant functional "
+                "overlap for most workflows. Consolidation reduces per-seat "
+                "costs and simplifies vendor management."
             ),
             estimated_monthly_savings=round(monthly_savings, 2),
             estimated_annual_savings=round(monthly_savings * 12, 2),
@@ -180,14 +180,14 @@ def evaluate(
                 f"Some usage may overlap."
             ),
             recommendation=(
-                f"Audit API usage logs to identify whether both providers are "
-                f"necessary. Consolidating to a single provider can simplify "
-                f"billing and potentially unlock volume discounts."
+                "Audit API usage logs to identify whether both providers are "
+                "necessary. Consolidating to a single provider can simplify "
+                "billing and potentially unlock volume discounts."
             ),
             reasoning=(
-                f"Some teams intentionally use multiple API providers for model "
-                f"diversity, but many carry redundant integrations from earlier "
-                f"experimentation. A usage audit can clarify."
+                "Some teams intentionally use multiple API providers for model "
+                "diversity, but many carry redundant integrations from earlier "
+                "experimentation. A usage audit can clarify."
             ),
             estimated_monthly_savings=round(monthly_savings, 2),
             estimated_annual_savings=round(monthly_savings * 12, 2),

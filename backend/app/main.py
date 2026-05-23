@@ -10,7 +10,6 @@ from slowapi import _rate_limit_exceeded_handler
 from slowapi.errors import RateLimitExceeded
 
 from app.api import audit, gated_audit, lead, public_audit, summary, tools
-from app.config import settings
 from app.middleware.rate_limiter import limiter
 
 # ---------------------------------------------------------------------------

@@ -1,3 +1,4 @@
+# ruff: noqa: E501
 """Transactional email via Resend for audit confirmations."""
 
 from __future__ import annotations
@@ -29,13 +30,13 @@ def _build_audit_email_html(public_id: str, audit_result: AuditResult) -> str:
     # Dynamic CTA block based on potential savings
     if monthly >= 500:
         cta = (
-            "<p style='font-size:15px;line-height:1.6;'>With potential savings of <strong style='color:#0052FF;'>${monthly:,.2f}/month</strong>, "
+            f"<p style='font-size:15px;line-height:1.6;'>With potential savings of <strong style='color:#0052FF;'>${monthly:,.2f}/month</strong>, "
             "you may benefit from a personalised consultation to help capture "
             "these savings quickly.</p>"
             '<p style="margin-top:24px;"><a href="https://credex.co/consult" '
             'style="background:#0052FF;color:#fff;padding:12px 24px;'
             'text-decoration:none;border-radius:4px;font-weight:bold;font-size:14px;">Book a Free Consultation</a></p>'
-        ).format(monthly=monthly)
+        )
     elif monthly < 100:
         cta = (
             "<p style='font-size:15px;line-height:1.6;color:#64748b;'>Your infrastructure looks well-optimised! We'll let you know if we "

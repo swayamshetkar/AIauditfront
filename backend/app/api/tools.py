@@ -1,7 +1,9 @@
 """GET /api/tools — Return supported tools and their valid plans."""
 
 import logging
+
 from fastapi import APIRouter
+
 from app.pricing.registry import PRICING_REGISTRY
 
 logger = logging.getLogger(__name__)
@@ -20,5 +22,5 @@ async def get_tools() -> dict:
         tools_data[tool_name] = {
             "plans": list(plans.keys())
         }
-    
+
     return {"tools": tools_data}

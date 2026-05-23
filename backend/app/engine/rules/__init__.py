@@ -1,12 +1,12 @@
 """Exports all engine rules."""
 
 from app.engine.rules import (
-    workflow_mismatch,
-    enterprise_overkill,
-    redundancy,
     api_overspend,
-    seat_efficiency,
+    enterprise_overkill,
     plan_optimization,
+    redundancy,
+    seat_efficiency,
+    workflow_mismatch,
 )
 
 ALL_RULES = [

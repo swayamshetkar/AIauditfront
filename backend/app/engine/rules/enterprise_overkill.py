@@ -5,9 +5,9 @@ Weight: 40 / 100  (heaviest rule — enterprise bloat is the #1 waste driver)
 
 from __future__ import annotations
 
+from app.pricing.registry import get_optimal_plan, get_plan_price
 from app.schemas import Confidence, Recommendation, Severity, ToolUsage, UseCase
 from app.tool_profiles import TOOL_PROFILES
-from app.pricing.registry import get_optimal_plan, get_plan_price
 
 RULE_NAME: str = "enterprise_overkill"
 RULE_WEIGHT: int = 40
@@ -128,10 +128,10 @@ def evaluate(
                     f"billing and admin controls."
                 ),
                 reasoning=(
-                    f"Team and business plans include administrative overhead costs "
-                    f"(SSO, workspace management) that provide minimal benefit for "
-                    f"individuals or pairs. An individual plan covers the same core "
-                    f"AI capabilities."
+                    "Team and business plans include administrative overhead costs "
+                    "(SSO, workspace management) that provide minimal benefit for "
+                    "individuals or pairs. An individual plan covers the same core "
+                    "AI capabilities."
                 ),
                 estimated_monthly_savings=round(monthly_savings, 2),
                 estimated_annual_savings=round(monthly_savings * 12, 2),
@@ -207,9 +207,9 @@ def evaluate(
                     f"{_format_tool(recommended_plan)} plan may be sufficient."
                 ),
                 reasoning=(
-                    f"Power-user plans provide significantly higher usage limits, "
-                    f"but many users find that standard pro tiers cover their actual "
-                    f"daily usage. Consider monitoring utilization before renewing."
+                    "Power-user plans provide significantly higher usage limits, "
+                    "but many users find that standard pro tiers cover their actual "
+                    "daily usage. Consider monitoring utilization before renewing."
                 ),
                 estimated_monthly_savings=round(monthly_savings, 2),
                 estimated_annual_savings=round(monthly_savings * 12, 2),

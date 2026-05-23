@@ -4,11 +4,9 @@ Uses FastAPI's TestClient (backed by httpx) to exercise endpoints without
 running a live server.
 """
 
-import pytest
 from fastapi.testclient import TestClient
 
 from app.main import app
-
 
 client = TestClient(app)
 

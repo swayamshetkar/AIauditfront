@@ -2,8 +2,9 @@
 
 from __future__ import annotations
 
-from app.schemas import Recommendation, ScoreBreakdown
 from app.engine.rules import ALL_RULES
+from app.schemas import Recommendation, ScoreBreakdown
+
 
 def compute_score(
     recommendations: list[Recommendation], rule_scores: dict[str, float]
@@ -27,10 +28,10 @@ def compute_score(
 
     for rule_name, weight in rule_weights.items():
         severity_factor = rule_scores.get(rule_name, 0.0)
-        
+
         # Rule's contribution to the final 0-100 score
         weighted_score = (weight * severity_factor / total_possible_weight) * 100.0
-        
+
         # Raw score out of 100 for this specific rule
         raw_score = severity_factor * 100.0
 

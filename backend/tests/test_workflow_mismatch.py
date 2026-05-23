@@ -4,9 +4,8 @@ The rule should flag tools that are a poor fit for the team's primary use case.
 For example, Cursor (a code editor) is a mismatch for a writing-focused team.
 """
 
-import pytest
 
-from app.engine.rules.workflow_mismatch import RULE_NAME, RULE_WEIGHT, evaluate
+from app.engine.rules.workflow_mismatch import evaluate
 from app.schemas import Recommendation, ToolUsage, UseCase
 
 

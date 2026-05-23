@@ -4,9 +4,8 @@ The rule should flag teams whose per-developer API spend is unreasonably high
 relative to team size and typical consumption patterns.
 """
 
-import pytest
 
-from app.engine.rules.api_overspend import RULE_NAME, RULE_WEIGHT, evaluate
+from app.engine.rules.api_overspend import evaluate
 from app.schemas import Recommendation, Severity, ToolUsage, UseCase
 
 

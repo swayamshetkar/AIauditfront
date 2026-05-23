@@ -1,7 +1,7 @@
 """POST /api/audit — run an AI spend audit and persist it."""
 
 import logging
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 from fastapi import APIRouter, Request
 from nanoid import generate as nanoid
@@ -41,7 +41,7 @@ async def create_audit(request: Request, payload: AuditInput) -> AuditResponse:
     # Persist (fire-and-forget — don't fail the request on DB errors)
     await store_audit(public_id, payload, audit_result)
 
-    created_at = datetime.now(timezone.utc).isoformat()
+    created_at = datetime.now(UTC).isoformat()
 
     return AuditResponse(
         public_id=public_id,

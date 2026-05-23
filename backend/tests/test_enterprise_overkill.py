@@ -4,9 +4,8 @@ The rule should flag teams on expensive enterprise plans when a cheaper tier
 would serve them just as well given their team size.
 """
 
-import pytest
 
-from app.engine.rules.enterprise_overkill import RULE_NAME, RULE_WEIGHT, evaluate
+from app.engine.rules.enterprise_overkill import evaluate
 from app.schemas import Recommendation, ToolUsage, UseCase
 
 

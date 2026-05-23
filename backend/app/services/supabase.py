@@ -5,10 +5,9 @@ from __future__ import annotations
 import logging
 from typing import Any
 
-from supabase import Client, create_client
-
 from app.config import settings
 from app.schemas import AuditInput, AuditResult, LeadInput
+from supabase import Client, create_client
 
 logger = logging.getLogger(__name__)
 
