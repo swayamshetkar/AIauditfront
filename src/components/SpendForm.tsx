@@ -217,12 +217,12 @@ export default function SpendForm() {
   if (step === "success") {
     return (
       <div className="max-w-2xl mx-auto text-center space-y-6 py-12 animate-in fade-in zoom-in duration-500">
-        <div className="w-20 h-20 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto shadow-sm">
+        <div className="w-20 h-20 bg-primary/10 text-primary rounded flex items-center justify-center mx-auto shadow-none">
           <CheckCircle2 className="w-10 h-10" />
         </div>
-        <h2 className="text-3xl font-bold tracking-tight">Success! Check your inbox.</h2>
+        <h2 className="text-3xl font-bold tracking-tight">Listing Initiated! Check your inbox.</h2>
         <p className="text-xl text-muted-foreground">
-          We just emailed you a secure link to your full, personalized AI optimization report.
+          We just emailed you a secure link to manage your marketplace liquidity and full AI credit analysis.
         </p>
       </div>
     );
@@ -231,23 +231,23 @@ export default function SpendForm() {
   if (step === "preview" && previewResult) {
     const efficiencyScore = 100 - previewResult.overspend_score;
     const isEfficient = efficiencyScore >= 80;
-    const scoreColor = isEfficient ? "text-emerald-500" : (efficiencyScore >= 50 ? "text-amber-500" : "text-rose-500");
+    const scoreColor = isEfficient ? "text-primary" : (efficiencyScore >= 50 ? "text-foreground" : "text-destructive");
 
     return (
       <div className="w-full max-w-2xl mx-auto space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-500">
-        <Card className="text-center p-8 border-none shadow-sm bg-muted/30">
+        <Card className="text-center p-8 border border-border shadow-none bg-card">
           <CardContent className="pt-0 space-y-4">
-            <h2 className="text-2xl font-bold tracking-tight">Your Efficiency Score</h2>
+            <h2 className="text-2xl font-bold tracking-tight">Credit Efficiency Score</h2>
             <div className={`text-7xl font-extrabold ${scoreColor}`}>
               {efficiencyScore}/100
             </div>
             <p className="text-lg text-muted-foreground">
-              Your stack has been analyzed! Enter your email to receive your full personalized AI optimization report.
+              Your cloud footprint has been evaluated! Enter your email to access your full liquidity analysis and list unused credits.
             </p>
           </CardContent>
         </Card>
 
-        <Card className="border-none shadow-lg">
+        <Card className="border border-border shadow-none">
           <CardContent className="pt-8">
             <Form {...leadForm}>
               <form onSubmit={leadForm.handleSubmit(onFinalSubmit)} className="space-y-6">
@@ -309,7 +309,7 @@ export default function SpendForm() {
                   />
                 </div>
 
-                <Button type="submit" size="lg" className="w-full text-lg h-14" disabled={isSubmitting}>
+                <Button type="submit" size="lg" className="w-full text-lg h-14 bg-primary text-primary-foreground hover:bg-primary/90" disabled={isSubmitting}>
                   {isSubmitting ? (
                     <>
                       <Loader2 className="w-5 h-5 mr-2 animate-spin" />
@@ -317,7 +317,7 @@ export default function SpendForm() {
                     </>
                   ) : (
                     <>
-                      Get My Full Report
+                      Access Liquidity Report
                       <ArrowRight className="w-5 h-5 ml-2" />
                     </>
                   )}
@@ -375,12 +375,12 @@ export default function SpendForm() {
 
         <div className="space-y-4 pt-4">
           <div className="mb-6">
-            <h3 className="text-xl font-bold tracking-tight">Your AI Stack</h3>
-            <p className="text-muted-foreground mt-1">List the tools your team currently uses to generate your audit.</p>
+            <h3 className="text-xl font-bold tracking-tight">Your Cloud & AI Footprint</h3>
+            <p className="text-muted-foreground mt-1">List the infrastructure your team currently uses to uncover liquidity.</p>
           </div>
 
           {fields.map((field, index) => (
-            <Card key={field.id} className="relative overflow-visible border-border/50 shadow-sm transition-all hover:shadow-md">
+            <Card key={field.id} className="relative overflow-visible border border-border shadow-none transition-all hover:border-primary">
               <CardContent className="pt-6 grid grid-cols-1 md:grid-cols-12 gap-4 items-start">
                 <div className="md:col-span-3">
                   <FormField
@@ -482,24 +482,24 @@ export default function SpendForm() {
           <Button
             type="button"
             variant="outline"
-            className="w-full border-dashed border-2 h-16 text-base font-medium text-muted-foreground hover:text-foreground mt-4 hover:border-primary/50 transition-colors bg-muted/10 hover:bg-muted/30"
+            className="w-full border-dashed border h-16 text-base font-medium text-muted-foreground hover:text-foreground mt-4 hover:border-primary transition-colors bg-muted hover:bg-muted/80 rounded"
             onClick={() => append({ tool: "", plan: "", monthly_spend: 0, seats: 1 })}
           >
             <Plus className="w-5 h-5 mr-2" />
-            Add Another Tool
+            Add Cloud / AI Infrastructure
           </Button>
         </div>
 
         <div className="pt-4">
-          <Button type="submit" size="lg" className="w-full h-14 text-xl shadow-md transition-transform hover:scale-[1.01]" disabled={isSubmitting}>
+          <Button type="submit" size="lg" className="w-full h-14 text-xl rounded transition-colors bg-primary text-primary-foreground hover:bg-primary/90" disabled={isSubmitting}>
             {isSubmitting ? (
               <>
                 <Loader2 className="w-5 h-5 mr-2 animate-spin" />
-                Calculating Savings...
+                Analyzing Cloud Spend...
               </>
             ) : (
               <>
-                Calculate Savings
+                Find Liquidity
                 <ArrowRight className="w-5 h-5 ml-2" />
               </>
             )}

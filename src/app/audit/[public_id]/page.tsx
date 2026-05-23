@@ -12,16 +12,16 @@ export async function generateMetadata({ params }: AuditPageProps): Promise<Meta
   try {
     const data = await getPublicAudit(public_id);
     return {
-      title: data.og?.title || "AIRev Audit Result",
-      description: data.og?.description || "Check out this AI stack audit.",
+      title: data.og?.title || "Credex Liquidity Analysis",
+      description: data.og?.description || "Check out this AI & Cloud liquidity analysis.",
       openGraph: {
-        title: data.og?.title || "AIRev Audit Result",
-        description: data.og?.description || "Check out this AI stack audit.",
+        title: data.og?.title || "Credex Liquidity Analysis",
+        description: data.og?.description || "Check out this AI & Cloud liquidity analysis.",
       }
     };
   } catch (e) {
     return {
-      title: "AIRev Audit Result",
+      title: "Credex Liquidity Analysis",
     };
   }
 }
