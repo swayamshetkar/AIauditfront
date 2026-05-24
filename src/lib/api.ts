@@ -1,10 +1,6 @@
 import {
-  AuditRequest,
-  AuditResponse,
   GenerateSummaryRequest,
   GenerateSummaryResponse,
-  SaveLeadRequest,
-  SaveLeadResponse,
   PublicAuditResponse,
   ToolsResponse,
   AuditPreviewRequest,
@@ -54,12 +50,7 @@ async function fetchApi<T>(endpoint: string, options?: RequestInit): Promise<T> 
   return response.json();
 }
 
-export async function generateAudit(data: AuditRequest): Promise<AuditResponse> {
-  return fetchApi<AuditResponse>("/api/audit", {
-    method: "POST",
-    body: JSON.stringify(data),
-  });
-}
+
 
 export async function getAuditPreview(data: AuditPreviewRequest): Promise<AuditPreviewResponse> {
   return fetchApi<AuditPreviewResponse>("/api/audit-preview", {
@@ -82,12 +73,7 @@ export async function generateSummary(data: GenerateSummaryRequest): Promise<Gen
   });
 }
 
-export async function saveLead(data: SaveLeadRequest): Promise<SaveLeadResponse> {
-  return fetchApi<SaveLeadResponse>("/api/save-lead", {
-    method: "POST",
-    body: JSON.stringify(data),
-  });
-}
+
 
 export async function getPublicAudit(publicId: string): Promise<PublicAuditResponse> {
   return fetchApi<PublicAuditResponse>(`/api/audit/${publicId}`, {
