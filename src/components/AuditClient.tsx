@@ -3,9 +3,9 @@
 import { useEffect, useState } from "react";
 import { PublicAuditResponse, GenerateSummaryResponse } from "@/types/api";
 import { generateSummary } from "@/lib/api";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Sparkles, ArrowDownToLine, Zap, CheckCircle2, AlertTriangle, XCircle } from "lucide-react";
+import { Sparkles, Zap, CheckCircle2, AlertTriangle, XCircle } from "lucide-react";
 
 export default function AuditClient({ 
   publicId, 
@@ -18,8 +18,7 @@ export default function AuditClient({
   const [summaryLoading, setSummaryLoading] = useState(true);
 
   const audit = initialData.audit;
-  const isHighSavings = audit.total_estimated_monthly_savings >= 500;
-  const isLowSavings = audit.total_estimated_monthly_savings < 100;
+
 
   // Calculate Efficiency Score (100 - overspend)
   // An overspend of 0 means 100% efficient

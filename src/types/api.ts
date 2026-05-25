@@ -48,12 +48,6 @@ export interface AuditData {
   total_estimated_annual_savings: number;
 }
 
-export interface AuditResponse {
-  public_id: string;
-  created_at: string;
-  audit: AuditData;
-}
-
 export interface GenerateSummaryRequest {
   audit_result: AuditData;
 }
@@ -63,19 +57,7 @@ export interface GenerateSummaryResponse {
   source: string;
 }
 
-export interface SaveLeadRequest {
-  email: string;
-  company_name: string;
-  role: string;
-  team_size: number;
-  audit_id: string;
-  website: string; // Honeypot
-}
 
-export interface SaveLeadResponse {
-  success: boolean;
-  message: string;
-}
 
 export interface PublicAuditResponse {
   public_id: string;

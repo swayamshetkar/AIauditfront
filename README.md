@@ -26,7 +26,18 @@ This project operates as a **Fullstack Monorepo**.
 
 ### How the Engine Analyzes Tools
 
-The backend groups AI tools into strict categories (`coding`, `productivity`, `api`) and evaluates them against 5 strict rules. 
+The backend uses a **Universal Mathematical Scoring Model** paired with a deterministic rule engine.
+
+#### 1. The Universal Curve
+Instead of using rigid "point deductions," the engine dynamically calculates the *Optimal Spend* for any given team size and stack composition. It then calculates the ratio `R = actual_spend / optimal_spend` and maps it to a 0-100 score using a continuous asymptote curve.
+This creates a robust **Dual Penalty System**:
+- **Extreme Overspend (The Waste Ratio):** If a user inputs $66,000,000 for a $100 optimal stack, the curve detects 99.99% waste and crushes the score to exactly `0/100`.
+- **Extreme Under-utilization (Adoption Deficit):** If a user inputs a $1 spend for a 10,000 person team, the curve detects massive AI starvation and instantly crashes the score to `0/100`.
+
+This means the math inherently solves for *every numerical permutation from zero to infinity*.
+
+#### 2. The Textual Insights Engine
+While the curve governs the math, the tools are grouped into strict categories (`coding`, `productivity`, `api`) and evaluated against specific rules to generate the *Why* in English:
 
 | Rule | Description | Target Comparison |
 | :--- | :--- | :--- |
@@ -35,6 +46,7 @@ The backend groups AI tools into strict categories (`coding`, `productivity`, `a
 | **Redundancy** | Flags overlapping subscriptions. | Compares tools in the same category. For example, if a team has both **Cursor** and **Copilot**, it recommends dropping the more expensive one. It does the same for overlapping productivity tools (e.g., **ChatGPT Plus** and **Claude Pro**). |
 | **API Overspend** | Flags inefficient seat-based spending. | Analyzes total seat cost. If seat costs exceed typical API consumption costs, it recommends shifting to API access (OpenAI API, Anthropic API) with internal UIs. |
 | **Seat Efficiency** | Flags unused seats. | Compares `team_size` against `total_seats`. Recommends canceling seats that exceed headcount. |
+| **Adoption Deficit** | Flags AI starvation. | Triggers when the team is severely under-investing in AI relative to their headcount. |
 
 ### The Secure Gate & Security Measures
 
