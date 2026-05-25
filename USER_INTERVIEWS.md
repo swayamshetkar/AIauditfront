@@ -69,6 +69,5 @@
 
 - Vinyas didn't realize Cursor and Copilot were redundant until I specifically asked about overlap. He said "I knew it in the back of my head, but nobody ever put a dollar amount on it. Seeing it as $152/mo wasted — that actually makes me want to fix it."
 - He was more interested in the "adoption deficit" angle than expected — asked if the tool could also tell him if his team was *under*-investing in AI compared to competitors.
-### Confidence Level
 
-<!-- TODO: How confident are we that the problem is real and painful enough 
+
